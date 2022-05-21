@@ -23,7 +23,7 @@ public class NseRestController{
 	
 	@GetMapping("nifty")
 	public FilteredResponse getNiftyData(Model model) {
-		return processor.processNiftyData(nifty.getLiveNiftyData(FeignBuilder.builder()), 500,50);
+		return processor.processNiftyData(nifty.getLiveNiftyData(FeignBuilder.builder()), 400,50);
 	}
 	
 	@GetMapping("banknifty")

@@ -35,14 +35,21 @@ public class NSEDataProcessor {
 			List<Data> records = new ArrayList<Data>();
 			
 			double pastUnderlyingPrice =0;
-	
+
+
+			//Calculate Current Strike Price
 			double currentStrike =Math.round((nse.getRecords().getUnderlyingValue()/round))*round;
-			
+
+
+			//Todo- Get the current expiry date and next date from calendar.Then calculate the same for next expiry date.
+
+			//Filter Out the data for 10 records above and less
 			records = Arrays.asList(nse.getFiltered().getData()).stream()
 					.filter(data -> (data.getStrikePrice()>=(currentStrike-limit) && data.getStrikePrice()<=(currentStrike+limit)))
 					.collect(Collectors.toList());
-			
-			
+
+
+			// Calculating Support and Resistance
 			for (Data data : records) {
 				putLevels.put(data.getStrikePrice(), (data.getPe().getChangeinOpenInterest()* data.getPe().getTotalTradedVolume())/crore);
 				callLevels.put(data.getStrikePrice(), (data.getCe().getChangeinOpenInterest()* data.getCe().getTotalTradedVolume())/crore);
@@ -63,6 +70,7 @@ public class NSEDataProcessor {
 			}
 			
 			FilteredResponse response = new FilteredResponse();
+
 			response.setUnderlyingPrice(nse.getRecords().getUnderlyingValue());
 			response.setCurrentStrike(currentStrike);
 			response.setPastRecords(niftyPastRecords);
@@ -76,7 +84,10 @@ public class NSEDataProcessor {
 			response.setCallTotalOI(nse.getFiltered().getCe().getTotOI());
 			response.setPutTotalVolume(nse.getFiltered().getPe().getTotVol());
 			response.setCallTotalVolume(nse.getFiltered().getCe().getTotVol());
-			niftyCount++;
+			response.setTotalChangeInOIForCall(records.stream().map(data -> data.getCe().getChangeinOpenInterest()).collect(Collectors.toList()).stream().reduce(0.0, Double::sum));
+	 	    response.setTotalChangeInOIForPut(records.stream().map(data -> data.getPe().getChangeinOpenInterest()).collect(Collectors.toList()).stream().reduce(0.0, Double::sum));
+			response.setPcr(Math.abs(response.getTotalChangeInOIForPut()/response.getTotalChangeInOIForCall()));
+		niftyCount++;
 			
 			return response;
 		}

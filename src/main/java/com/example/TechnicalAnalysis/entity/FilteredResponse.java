@@ -9,9 +9,39 @@ public class FilteredResponse {
 	List<Data> pastRecords;
 	
 	List<Data> records;
-	
+
+	double totalChangeInOIForCall;
+
+	double pcr;
+
+	public double getPcr() {
+		return pcr;
+	}
+
+	public void setPcr(double pcr) {
+		this.pcr = pcr;
+	}
+
+	public double getTotalChangeInOIForPut() {
+		return totalChangeInOIForPut;
+	}
+
+	public void setTotalChangeInOIForPut(double totalChangeInOIForPut) {
+		this.totalChangeInOIForPut = totalChangeInOIForPut;
+	}
+
+	double totalChangeInOIForPut;
+
+	public double getTotalChangeInOIForCall() {
+		return totalChangeInOIForCall;
+	}
+
 	double currentStrike;
-	
+
+	public void setTotalChangeInOIForCall(double totalChangeInOIForCall) {
+		this.totalChangeInOIForCall = totalChangeInOIForCall;
+	}
+
 	double underlyingPrice;
 	
 	double pastUnderlyingPrice;

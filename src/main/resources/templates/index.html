@@ -207,8 +207,15 @@
 		
 			   if(tableName == "niftyTable"){
 				   
-				   document.getElementById("niftypcr").innerHTML=(object.putTotalOI/object.callTotalOI).toFixed(4);
-				   
+				   document.getElementById("niftypcr").innerHTML=(object.pcr).toFixed(4);
+
+				    if(object.pcr>0.5){
+		        	document.getElementById("niftypcr").style.backgroundColor= "green";
+		          }
+		        if(object.pcr<=0.5 && pcr>0){
+		        	document.getElementById("niftypcr").style.backgroundColor= "red";
+		        }
+
 					if(object.underlyingPrice > object.pastUnderlyingPrice){
 				      	document.getElementById('nifty').innerHTML=object.underlyingPrice;
 				      	document.getElementById('nifty').style.backgroundColor='green';
