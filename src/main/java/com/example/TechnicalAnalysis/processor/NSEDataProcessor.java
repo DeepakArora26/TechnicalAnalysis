@@ -144,6 +144,10 @@ public class NSEDataProcessor {
 		response.setCallTotalVolume(nse.getFiltered().getCe().getTotVol());
 		bankNiftyPastRecords = records;
 		pastUnderlyingPrice=nse.getRecords().getUnderlyingValue();
+		response.setTotalChangeInOIForCall(records.stream().map(data -> data.getCe().getChangeinOpenInterest()).collect(Collectors.toList()).stream().reduce(0.0, Double::sum));
+		response.setTotalChangeInOIForPut(records.stream().map(data -> data.getPe().getChangeinOpenInterest()).collect(Collectors.toList()).stream().reduce(0.0, Double::sum));
+		response.setPcr(Math.abs(response.getTotalChangeInOIForPut()/response.getTotalChangeInOIForCall()));
+
 		bankNiftyCount++;
 		
 		return response;

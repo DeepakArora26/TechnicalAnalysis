@@ -251,7 +251,14 @@
 			   
 			   if(tableName == "bankniftyTable"){
 				   
-				   document.getElementById("bankniftypcr").innerHTML=(object.putTotalOI/object.callTotalOI).toFixed(4);
+				     document.getElementById("bankniftypcr").innerHTML=(object.pcr).toFixed(4);
+
+				    if(object.pcr>0.5){
+		        	document.getElementById("bankniftypcr").style.backgroundColor= "green";
+		          }
+		        if(object.pcr<=0.5 && pcr>0){
+		        	document.getElementById("bankniftypcr").style.backgroundColor= "red";
+		        }
 				   
 					if(object.underlyingPrice > object.pastUnderlyingPrice){
 				      	document.getElementById('banknifty').innerHTML=object.underlyingPrice;

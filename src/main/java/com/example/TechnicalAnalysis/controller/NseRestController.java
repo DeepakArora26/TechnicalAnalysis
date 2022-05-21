@@ -28,7 +28,7 @@ public class NseRestController{
 	
 	@GetMapping("banknifty")
 	public FilteredResponse getBankNifty(Model model) {
-		return processor.processBankNiftyData(nseProxy.getLiveBankNiftyData(FeignBuilder.builder()), 1000, 100);
+		return processor.processBankNiftyData(nseProxy.getLiveBankNiftyData(FeignBuilder.builder()), 800, 100);
 	}
 	
 }
